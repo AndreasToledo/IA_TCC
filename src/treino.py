@@ -51,8 +51,8 @@ def treinar_modelo():
     print(f"Vocabulário construído com {len(vocab)} palavras.")
 
     # Criar modelo
-    modelo = criar_modelo(vocab_size=len(vocab), output_dim=OUTPUT_DIM).to(DEVICE)
-    criterio = nn.CrossEntropyLoss()
+    modelo = criar_modelo(vocab_size=len(vocab)).to(DEVICE)
+    criterio = nn.BCELoss()
     otimizador = optim.Adam(modelo.parameters(), lr=LEARNING_RATE)
 
     print("Iniciando o treinamento...")
@@ -65,7 +65,7 @@ def treinar_modelo():
             rotulos = [0 if r == 'negativo' else 1 for r in batch['rótulo']]
 
             entradas = transformar_texto_em_tensor(textos, vocab).to(DEVICE)
-            rotulos = torch.tensor(rotulos, dtype=torch.long).to(DEVICE)
+            rotulos = torch.tensor(rotulos, dtype=torch.float).unsqueeze(1).to(DEVICE)
 
             otimizador.zero_grad()
             saida = modelo(entradas)

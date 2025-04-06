@@ -49,3 +49,21 @@ def textos_para_ids(textos, vocab):
 
 def padronizar_lote(textos_ids, max_len=400):
     return pad_sequence(textos_ids, batch_first=True, padding_value=0)[:, :max_len]
+
+# src/preprocessamento.py
+
+import re
+
+def preprocessar_texto(texto):
+    """
+    Limpa e normaliza o texto para o modelo.
+    """
+    texto = texto.lower()  # minúsculas
+    texto = re.sub(r'[^a-záéíóúâêîôûàèìòùç\s]', '', texto)  # remove pontuação
+    texto = re.sub(r'\s+', ' ', texto).strip()  # espaços duplicados
+    return texto
+
+def preprocessar_texto(texto):
+    texto = texto.lower()
+    tokens = texto.split()
+    return tokens

@@ -16,7 +16,3 @@ class ModeloRegressaoTexto(nn.Module):
 
 def criar_modelo(vocab_size=5000, embed_dim=100, hidden_dim=128):
     return ModeloRegressaoTexto(vocab_size, embed_dim, hidden_dim)
-
-#f __name__ == "__main__":
-#   modelo = criar_modelo()
-#   print(modelo)
