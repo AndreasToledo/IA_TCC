@@ -36,11 +36,13 @@ def avaliar_redacao(texto):
 # Teste de exemplo
 if __name__ == "__main__":
     redacao_exemplo = """
-    É tipo assim, a gente vive num mundo que nem sempre é igual pra todo mundo né, e isso aí é complicado demais das conta. O negocio é que se todo mundo fosse feliz ia ser muito melhor do que não ser, e por isso que eu acho que a educação, ou seja lá o que for, tem que ser melhorada sim, porque senão não vai dar certo.
+    Hoje em dia tem muita tecnologia e isso muda as coisas. As pessoas tão usando celular todo dia e isso tá mudando como elas vivem, porque tudo ficou mais fácil e rápido. Antes era diferente, agora todo mundo fica no telefone, até as crianças.
 
-    Outra coisa é que às vezes o povo não tem o que fazer e fica inventando lei pra atrapalhar a vida dos outros, tipo não deixar ter barulho depois das 10, mas e se a pessoa trabalha de noite? Já pensou isso? Ninguém pensou. Por isso que o governo devia parar de gastar dinheiro com coisa atoa e começar a focar no que importa de verdade como, por exemplo, a comida que tá muito cara.
+A tecnologia é boa, mas também tem problema. Tem gente que fica viciada e não faz mais nada da vida. Tem que saber usar. A internet ajuda a estudar e a conversar com as pessoas de longe, mas também pode atrapalhar.
 
-    E assim, com tudo isso, podemos dizer que a sociedade precisa pensar mais no que tá acontecendo, porque se não pensar, aí já viu né.
+O governo precisa fazer alguma coisa, tipo ensinar a usar a internet direito. Porque tem muita gente que usa errado. Tem que ter regras.
+
+Então a tecnologia é boa, mas ruim também. Tem que usar com cuidado.
     """
     nota = avaliar_redacao(redacao_exemplo)
     print(f"Nota estimada: {nota}/1000")
