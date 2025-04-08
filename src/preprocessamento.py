@@ -56,14 +56,10 @@ import re
 
 def preprocessar_texto(texto):
     """
-    Limpa e normaliza o texto para o modelo.
+    Limpa, normaliza e tokeniza o texto.
     """
-    texto = texto.lower()  # minúsculas
-    texto = re.sub(r'[^a-záéíóúâêîôûàèìòùç\s]', '', texto)  # remove pontuação
-    texto = re.sub(r'\s+', ' ', texto).strip()  # espaços duplicados
-    return texto
-
-def preprocessar_texto(texto):
     texto = texto.lower()
+    texto = re.sub(r'[^a-záéíóúâêîôûàèìòùç\s]', '', texto)  # remove pontuação
+    texto = re.sub(r'\s+', ' ', texto).strip()
     tokens = texto.split()
     return tokens

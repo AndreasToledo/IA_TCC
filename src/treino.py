@@ -52,7 +52,7 @@ def treinar_modelo():
 
     # Criar modelo
     modelo = criar_modelo(vocab_size=len(vocab)).to(DEVICE)
-    criterio = nn.BCELoss()
+    criterio = nn.MSELoss()
     otimizador = optim.Adam(modelo.parameters(), lr=LEARNING_RATE)
 
     print("Iniciando o treinamento...")
