@@ -11,7 +11,8 @@ class ModeloRegressaoTexto(nn.Module):
     def forward(self, x):
         x = self.embedding(x)
         _, (hidden, _) = self.lstm(x)
-        out = self.fc(hidden[-1])  # Sem ativação — saída pode ser entre 0 e 1000
+        out = self.fc(hidden[-1])  # Passando pela camada final Linear
+        out = torch.sigmoid(out)  # Aplicando a Sigmoid para garantir que o valor fique entre 0 e 1
         return out
 
 def criar_modelo(vocab_size=5000, embed_dim=100, hidden_dim=128):
