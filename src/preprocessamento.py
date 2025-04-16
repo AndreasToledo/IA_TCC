@@ -1,5 +1,3 @@
-# src/preprocessamento.py
-
 import re
 from torch.nn.utils.rnn import pad_sequence
 import torch
@@ -49,8 +47,6 @@ def textos_para_ids(textos, vocab):
 
 def padronizar_lote(textos_ids, max_len=400):
     return pad_sequence(textos_ids, batch_first=True, padding_value=0)[:, :max_len]
-
-# src/preprocessamento.py
 
 import re
 
