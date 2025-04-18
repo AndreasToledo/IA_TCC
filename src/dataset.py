@@ -1,6 +1,9 @@
 import pandas as pd
 from torch.utils.data import Dataset
 
+caminho_redacoes = "dados/treino/redacoes.csv"
+caminho_notas = "dados/treino/notas.csv"
+
 class MeuDatasetTexto(Dataset):
     def __init__(self, caminho_redacoes, caminho_notas, transform=None):
         """
@@ -11,7 +14,6 @@ class MeuDatasetTexto(Dataset):
         """
         self.transform = transform
 
-        # Lê os dois arquivos e junta pelo ID
         df_textos = pd.read_csv(caminho_redacoes)
         df_notas = pd.read_csv(caminho_notas)
         self.df = pd.merge(df_textos, df_notas, on="id")

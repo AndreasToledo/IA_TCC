@@ -25,21 +25,33 @@ def avaliar_redacao(texto):
     entrada = texto_para_ids(texto, vocab)
     with torch.no_grad():
         saida = modelo(entrada)
-        nota_1000 = saida.item() * 1000
-        return round(nota_1000, 2)
+        nota_bruta = saida.item() * 1000
+
+        # Penaliza textos muito curtos com maior intensidade (agora linear)
+        num_palavras = len(texto.split())
+        if num_palavras < 80:
+            fator_penalidade = num_palavras / 300
+            nota_ajustada = nota_bruta * fator_penalidade
+        else:
+            nota_ajustada = nota_bruta
+
+        return round(nota_ajustada, 2)
+
  
 # Teste de exemplo
 if __name__ == "__main__":
     redacao_exemplo = """
-    A construção de uma sociedade verdadeiramente justa pressupõe, além de políticas públicas efetivas, o fortalecimento de valores éticos que orientem as relações humanas. Nesse contexto, a empatia — a capacidade de se colocar no lugar do outro — configura-se como elemento central para a promoção do respeito mútuo, da solidariedade e da inclusão. No entanto, observa-se, no Brasil contemporâneo, um déficit significativo desse valor, o que contribui para a manutenção de desigualdades e da intolerância social. Tal realidade exige uma abordagem multidimensional, que envolva a educação, a comunicação e o exemplo vindo das esferas de poder.
- 
-Primeiramente, é preciso considerar que a ausência de empatia se enraíza, em grande medida, na formação histórica e cultural do país, marcado por profundas desigualdades sociais. A naturalização do sofrimento alheio, perceptível em discursos meritocráticos e em práticas de exclusão, revela a necessidade urgente de fomentar uma cultura de escuta e reconhecimento da alteridade. Nesse sentido, o filósofo Martin Buber já afirmava que a verdadeira humanidade só se manifesta quando o “Eu” reconhece o “Tu” em sua plenitude, sem reduções ou estigmas.
- 
-Ademais, os meios de comunicação e as redes sociais possuem papel ambíguo nesse processo. Enquanto podem ser ferramentas de empatia — ao dar visibilidade a vozes silenciadas — também fomentam a polarização e a desumanização do outro, especialmente quando dominadas por discursos de ódio e fake news. Dessa forma, é imperativo promover uma media literacy nas escolas, que capacite os jovens a compreender criticamente o conteúdo que consomem e compartilham.
- 
-Por fim, cabe destacar que o exemplo vindo das lideranças políticas e institucionais exerce enorme influência sobre o comportamento coletivo. Um governante que naturaliza a exclusão ou que ridiculariza minorias legitima o desrespeito como prática cotidiana. Por isso, é essencial que as autoridades adotem posturas éticas e responsáveis, alinhadas ao princípio da dignidade humana.
- 
-Portanto, para que a empatia deixe de ser apenas um ideal abstrato e se converta em prática social concreta, é necessário investir em uma educação humanizadora, em políticas de combate à desigualdade e em lideranças comprometidas com o bem comum. Só assim será possível edificar uma sociedade onde o “nós” prevaleça sobre o “eu”.
+   A Constituição Federal de 1988 assegura, em seu artigo 5º, que todos são iguais perante a lei, sem distinção de qualquer natureza. No entanto, a realidade brasileira revela um abismo entre a teoria jurídica e a prática social, especialmente no que se refere à inclusão de pessoas com deficiência. Apesar dos avanços legislativos, como a Lei Brasileira de Inclusão (2015), a efetivação da acessibilidade e da integração plena ainda é um desafio que persiste.
+
+Em primeiro lugar, é notável a precariedade na infraestrutura urbana e nos espaços públicos, que frequentemente não atendem às necessidades das pessoas com deficiência. Calçadas irregulares, ausência de rampas, transporte coletivo não adaptado e a falta de sinalização tátil são obstáculos diários que limitam a autonomia e a mobilidade desse grupo, reforçando sua exclusão do convívio social.
+
+Ademais, o preconceito velado e a desinformação continuam sendo barreiras simbólicas à inclusão. Muitas vezes, pessoas com deficiência são vistas sob a ótica da piedade ou da incapacidade, o que reforça estigmas e limita oportunidades, sobretudo no mercado de trabalho. Mesmo com incentivos legais para a contratação, muitas empresas não oferecem condições adequadas ou treinamentos para lidar com a diversidade, o que prejudica tanto a produtividade quanto o bem-estar dos profissionais.
+
+A educação inclusiva, por sua vez, ainda enfrenta entraves estruturais e pedagógicos. Embora prevista em lei, a falta de professores capacitados e de recursos didáticos adaptados dificulta o aprendizado de alunos com deficiência, comprometendo seu desenvolvimento acadêmico e social.
+
+Portanto, para que a sociedade brasileira avance rumo à verdadeira inclusão, é necessário um esforço conjunto entre poder público, iniciativa privada e sociedade civil. Investimentos em infraestrutura acessível, campanhas de conscientização e capacitação profissional são medidas urgentes. Além disso, é imprescindível que a inclusão deixe de ser um mero discurso político e se concretize em ações que valorizem a diversidade humana.
+
+Afinal, uma sociedade justa e igualitária só é possível quando todos os seus cidadãos têm garantido o direito de viver com dignidade, autonomia e respeito às suas particularidades.
     """
     nota = avaliar_redacao(redacao_exemplo)
     print(f"Nota estimada: {nota}/1000")
