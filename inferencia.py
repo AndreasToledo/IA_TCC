@@ -8,9 +8,9 @@ from src.preprocessamento import preprocessar_texto
 sys.stdin = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-modelo_path = "resultados/checkpoints/modelo_treinado.pth"
-vocab_path = "resultados/checkpoints/vocab.pkl"
-
+modelo_path = r"C:\Users\User\Documents\TCC\IA_TCC\resultados\checkpoints\modelo_treinado.pth"
+vocab_path = r"C:\Users\User\Documents\TCC\IA_TCC\resultados\checkpoints\vocab.pkl"
+                
 with open(vocab_path, "rb") as f:
     vocab = pickle.load(f)
 
@@ -25,11 +25,11 @@ def texto_para_ids(texto, vocab, max_len=100):
     return torch.tensor([ids], dtype=torch.long)
 
 def avaliar_redacao(texto):
-    # Remover o uso de sys.stdin e passar o texto diretamente
     entrada = texto_para_ids(texto, vocab)
     with torch.no_grad():
         saida = modelo(entrada)
         nota_bruta = saida.item() * 1000
+        nota_bruta = min(nota_bruta, 1000)
 
         num_palavras = len(texto.split())
         if num_palavras < 80:
@@ -40,6 +40,7 @@ def avaliar_redacao(texto):
 
         return round(nota_ajustada, 2)
 
-# Teste com um texto diretamente no código
-texto_teste = "Texto de exemplo para testar a função."
-print(avaliar_redacao(texto_teste))
+if __name__ == "__main__":
+    texto_entrada = sys.stdin.read().strip()
+    nota = avaliar_redacao(texto_entrada)
+    print(nota)
